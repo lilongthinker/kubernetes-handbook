@@ -8,14 +8,14 @@
 
 云原生系统的设计理念如下:
 
-- 面向分布式设计（Distribution）：容器、微服务、API 驱动的开发；
-- 面向配置设计（Configuration）：一个镜像，多个环境配置；
-- 面向韧性设计（Resistancy）：故障容忍和自愈；
+- 面向分布式设计（Distribution）：容器、微服务、API 驱动的开发； **无物理单点**
+- 面向配置设计（Configuration）：一个镜像，多个环境配置；**中心化的配置，动态化的配置，基于环境的配置**
+- 面向韧性设计（Resistancy）：故障容忍和自愈；**自愈能力**
 - 面向弹性设计（Elasticity）：弹性扩展和对环境变化（负载）做出响应；
-- 面向交付设计（Delivery）：自动拉起，缩短交付时间；
-- 面向性能设计（Performance）：响应式，并发和资源高效利用；
-- 面向自动化设计（Automation）：自动化的 DevOps；
-- 面向诊断性设计（Diagnosability）：集群级别的日志、metric 和追踪；
+- 面向交付设计（Delivery）：自动拉起，缩短交付时间；**更高层次的自动化**
+- 面向性能设计（Performance）：响应式，并发和资源高效利用；**云时代的性能最重要的是线性扩展的能力，无论是应用层还是数据层**
+- 面向自动化设计（Automation）：自动化的 DevOps；**Devops理念在云上的进一步深化，云时代有与API操作的普遍共识，DevOps更加容易**
+- 面向诊断性设计（Diagnosability）：集群级别的日志、metric 和追踪；**软件设计的可观察性**
 - 面向安全性设计（Security）：安全端点、API Gateway、端到端加密；
 
 以上的设计理念很多都是继承自分布式应用的设计理念。虽然有如此多的理念但是我们仍然无法辨认什么样的设施才是云原生基础设施，不过可以先用排除法，我将解释什么不是云原生基础设施。
@@ -36,7 +36,7 @@
 
 调度器是编排平台的一个子集，仅负责选择运行在每台服务器上的进程和服务。
 
-云原生不是微服务或基础设施即代码。微服务意味着更快的开发周期和更小的独特功能，但是单片应用程序可以具有相同的功能，使其能够通过软件有效管理，并且还可以从云原生基础设施中受益。
+**云原生不是微服务或基础设施即代码**。微服务意味着更快的开发周期和更小的独特功能，但是单片应用程序可以具有相同的功能，使其能够通过软件有效管理，并且还可以从云原生基础设施中受益。
 
 基础设施即代码以机器可解析语言或领域特定语言（DSL）定义、自动化您的基础设施。将代码应用于基础架构的传统工具包括配置管理工具（例如Chef和Puppet）。这些工具在自动执行任务和提供一致性方面有很大帮助，但是它们在提供必要的抽象来描述超出单个服务器的基础设施方面存在缺陷。
 
@@ -52,7 +52,11 @@
 
 为了写好本书，也为了有一个共享词汇表，我们需要定义“云原生应用程序”是什么意思。云原生与12因素应用程序不同，即使它们可能共享一些类似的特征。如果你想了解更多细节，请阅读Kevin Hoffman撰写的“超越12因素应用程序”（O'Reilly，2012）。
 
-云原生应用程序被设计为在平台上运行，并设计用于弹性，敏捷性，可操作性和可观察性。弹性包含失败而不是试图阻止它们；它利用了在平台上运行的动态特性。敏捷性允许快速部署和快速迭代。可操作性从应用程序内部控制应用程序生命周期，而不是依赖外部进程和监视器。可观察性提供信息来回答有关应用程序状态的问题。
+云原生应用程序被设计为在平台上运行，并设计用于弹性，敏捷性，可操作性和可观察性。
+- 弹性包含失败而不是试图阻止它们；它利用了在平台上运行的动态特性。
+- 敏捷性允许快速部署和快速迭代。
+- 可操作性从应用程序内部控制应用程序生命周期，而不是依赖外部进程和监视器。
+- 可观察性提供信息来回答有关应用程序状态的问题。
 
 > **云原生定义**
 >
@@ -65,6 +69,22 @@
 - 遥测数据
 - 弹性
 - 声明式的，而不是命令式的
+
+CNCF分别在2018年和2019年给出的云原生定义（分别在2017年年度报告，2018年年度报告中给出的）
+2017年度报告中CNCF是这样正式介绍自己的：
+
+>The Cloud Native Computing Foundation (CNCF) is an open source software foundation dedicated to making cloud-native computing universal and sustainable. Cloud-native computing uses an open source software stack to deploy applications as **microservices**, packaging each part into its own **container**, and **dynamically orchestrating** those containers to optimize resource utilization. Cloud-native technologies enable software developers to build great products faster.
+
+>We are a community of open source projects, including Kubernetes, Envoy and Prometheus. Kubernetes and other CNCF projects are some of the highest velocity projects in the history of open source.
+
+2018年度报告中 CNCF 对自己的定位是：
+
+>The Cloud Native Computing Foundation (CNCF) is an open source software foundation dedicated to making cloud native computing universal and sustainable. Cloud native technologies empower organizations to build and run scalable applications in modern, dynamic **environments such as public, private, and hybrid clouds**. **Containers, service meshes, microservices, immutable infrastructure, and declarative APIs** exemplify this approach.
+
+>We are a community of open source projects, including Kubernetes, Prometheus, Envoy, and many others. Kubernetes and other CNCF projects are some of the highest velocity projects in the history of open source.
+
+我们可以看到其表述中更加注重多云环境，主要涉及的技术比2017年多了Service Mesh（服务网格）、不可变基础设施和声明式 API。
+
 
 ### 微服务
 
@@ -117,7 +137,7 @@
 
 通常会将数据刮取或推送到时间序列数据库（例如Prometheus或InfluxDB）进行聚合。遥测数据的唯一要求是它将被收集数据的系统格式化。
 
-至少，可能最好实施度量标准的RED方法，该方法收集应用程序的速率，错误和执行时间。
+至少，可能最好实施度量标准的RED（Request-Error-Delay)方法，该方法收集应用程序的速率，错误和执行时间。
 
 **请求率**
 
@@ -151,13 +171,13 @@
 >
 >  ——David Rensin，e ARCHITECT Show：来自Google的关于云计算的速成课程
 
-设计具有弹性的应用程序可能是整本书本身。我们将在云原生应用程序中考虑弹性的两个主要方面：为失败设计和优雅降级。
+**设计具有弹性的应用程序可能是整本书本身。我们将在云原生应用程序中考虑弹性的两个主要方面：为失败设计和优雅降级。**
 
 #### 为失败设计
 
 唯一永远不会失败的系统是那些让你活着的系统（例如心脏植入物和刹车系统）。如果您的服务永远不会停止运行，您需要花费太多时间设计它们来抵制故障，并且没有足够的时间增加业务价值。您的SLO确定服务需要多长时间。您花费在工程设计上超出SLO的正常运行时间的任何资源都将被浪费掉。
 
-您应该为每项服务测量两个值，即平均无故障时间（MTBF）和平均恢复时间（MTTR）。监控和指标可以让您检测您是否符合您的SLO，但运行应用程序的平台是保持高MTBF和低MTTR的关键。
+您应该为每项服务测量两个值，即 **平均无故障时间（MTBF）和平均恢复时间（MTTR）**。监控和指标可以让您检测您是否符合您的SLO，但运行应用程序的平台是保持高MTBF和低MTTR的关键。
 
 在任何复杂的系统中，都会有失败。您可以管理硬件中的某些故障（例如，RAID和冗余电源），以及某些基础设施中的故障（例如负载平衡器）。但是因为应用程序知道他们什么时候健康，所以他们也应该尽可能地管理自己的失败。
 
@@ -167,9 +187,9 @@
 
 您的应用程序的最佳状态是健康状态。第二好的状态是失败状态。其他一切都是非二进制的，难以监控和排除故障。 Honeycomb首席执行官CharityMajors在她的文章“Ops：现在每个人都在工作”中指出：“分布式系统永远不会起作用；它们处于部分退化服务的持续状态。接受失败，设计弹性，保护和缩小关键路径。”
 
-无论发生什么故障，云原生应用程序都应该是可适应的。他们期望失败，所以他们在检测到时进行调整。
+无论发生什么故障，云原生应用程序都应该是可适应的。他们期望失败，所以他们在检测到失败时进行调整。
 
-有些故障不能也不应该被设计到应用程序中（例如，网络分区和可用区故障）。该平台应自主处理未集成到应用程序中的故障域。
+<u>有些故障不能也不应该被设计到应用程序中（例如，网络分区和可用区故障）。该平台应自主处理未集成到应用程序中的故障域。</u>
 
 #### 优雅降级
 
@@ -186,8 +206,8 @@
 > 云原生应用程序需要在基础设施之上建立一个平台，以使基础设施更具弹性。如果您希望将现有应用程序“提升并转移”到云中，则应检查云提供商的服务级别协议（SLA），并考虑在使用多个服务时会发生什么情况。
 >
 > 让我们拿运行我们的应用程序的云来进行假设。
-> 
-> 计算基础设施的典型可用性是每月99.95％的正常运行时间。这意味着您的实例每天可能会缩短到43.2秒，并且仍在您的云服务提供商的SLA中。
+>
+> 计算基础设施的典型可用性是每月99.95％的正常运行时间。这意味着您的实例每天可能会中断到43.2秒，并且仍在您的云服务提供商的SLA中。
 >
 > 另外，实例的本地存储（例如EBS卷）也具有99.95％的可用性正常运行时间。如果幸运的话，他们都会同时出现故障，但最糟糕的情况是他们可能会在不同的时间停机，让您的实例只有99.9％的可用性。
 >
@@ -196,10 +216,11 @@
 > 将可用性乘到一起可以快速了解为什么应以不同方式处理云。真正不好的部分是，如果云提供商不符合其SLA，它将退还其账单中一定比例的退款。
 >
 > 虽然您不必为停机支付费用，但我们并不知道世界上存在云计算信用的单一业务。如果您的应用程序的可用性不足以超过您收到的信用额度，那么您应该真正考虑是否应该运行这个应用程序。
+> **高可用设计就是让你的服务的可用性超过你所以来的基础设施的可用度**
 
 ### 声明式，非反应式
 
-由于云原生应用程序设计为在云环境中运行，因此它们与基础设施和支持应用程序的交互方式与传统应用程序不同。在云原生应用程序中，与任何事物进行通信的方式都是通过网络进行的。很多时候，网络通信都是通过RESTful HTTP调用完成的，但它也可以通过其他接口（如远程过程调用（RPC））来实现。
+由于云原生应用程序设计为在云环境中运行，因此它们与基础设施和支持应用程序的交互方式与传统应用程序不同。在云原生应用程序中，与任何事物进行通信的方式都是通过网络进行的。很多时候，网络通信都是通过RESTful HTTP调用完成的，但它也可以通过其他接口（如远程过程调用（RPC））来实现。-- 其实传统的基础设施也是如此
 
 传统的应用程序会通过消息队列，写在共享存储上的文件或触发shell命令的本地脚本来自动执行任务。通信方法对发生的事件作出反应（例如，如果用户单击提交，运行提交脚本）并且通常需要存在于同一物理或虚拟服务器上的信息。
 
@@ -214,6 +235,9 @@
 当应用程序可以信任通信的弹性时，他们应该停止反应并开始声明。声明式沟通相信网络将传递消息。它也相信应用程序将返回成功或错误。这并不是说应用程序监视变化并不重要。 Kubernetes的控制器正是这样做到API服务器。但是，一旦发现变更，他们就会声明一个新的状态，并相信API服务器和kubelets会做必要的事情。
 
 声明式通信模型由于多种原因而变得更加健壮。最重要的是，它规范了通信模型，并且它将功能实现从应用程序转移到远程API或服务端点，从而实现某种状态到达期望状态。这有助于简化应用程序，并使它们彼此的行为更具可预测性。
+
+**有点像同步编程模型，转为异步编程模型，但是复杂度被抽象到k8s和CRD里面**
+**声明式API与命令式或者反应式API最终要的区别在于定义了一个终态，当偏离终态的时候，会自动去修复，当修复不成功的时候才需要人来进行介入，相比传统的命令式或者反应式，运维上更加简洁**
 
 ### 云原生应用程序如何影响基础设施？
 
@@ -230,3 +254,5 @@
 ## 参考
 
 - [“Cloud Native Infrastructure”, a Free O’Reilly eBook](https://blog.heptio.com/i-still-remember-the-first-time-i-logged-into-a-production-server-over-ssh-and-telling-myself-i-53ab1d1e7f46)
+
+- [CNCF年度报告解读（2018年)](https://jimmysong.io/posts/cncf-annual-report-2018-review/)
