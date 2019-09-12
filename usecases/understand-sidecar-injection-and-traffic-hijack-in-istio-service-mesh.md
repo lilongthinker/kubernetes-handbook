@@ -1,6 +1,6 @@
-## 深入理解Istio Service Mesh中的Envoy Sidecar注入与流量劫持
+# 深入理解Istio Service Mesh中的Envoy Sidecar注入与流量劫持
 
-**注意：本书中的 Service Mesh 章节已不再维护，请转到 [istio-handbook](https://jimmysong.io/istio-handbook) 中浏览。**
+**注意：本书中的 Service Mesh 章节已不再维护，请转到 [istio-handbook](https://www.servicemesher.com/istio-handbook) 中浏览。**
 
 在讲解 Istio 如何将 Envoy 代理注入到应用程序 Pod 中之前，我们需要先了解以下几个概念：
 
@@ -23,7 +23,7 @@ productpage istio-proxy
 
 使用 Sidecar 模式部署服务网格时，无需在节点上运行代理（因此您不需要基础结构的协作），但是集群中将运行多个相同的 Sidecar 副本。从另一个角度看：我可以为一组微服务部署到一个服务网格中，你也可以部署一个有特定实现的服务网格。在 Sidecar 部署方式中，你会为每个应用的容器部署一个伴生容器。Sidecar 接管进出应用容器的所有流量。在 Kubernetes 的 Pod 中，在原有的应用容器旁边运行一个 Sidecar 容器，可以理解为两个容器共享存储、网络等资源，可以广义的将这个注入了 Sidecar 容器的 Pod 理解为一台主机，两个容器共享主机资源。
 
-例如下图 [SOFAMesh & SOFA MOSN—基于Istio构建的用于应对大规模流量的Service Mesh解决方案](https://jimmysong.io/posts/sofamesh-and-mosn-proxy-sidecar-service-mesh-by-ant-financial/)的架构图中描述的，MOSN 作为 Sidecar 的方式和应用运行在同一个 Pod 中，拦截所有进出应用容器的流量，[SOFAMesh](https://github.com/alipay/sofa-mesh) 兼容 Istio，其中使用 Go 语言开发的 [SOFAMosn](https://github.com/alipay/sofa-mosn) 替换了 Envoy。
+例如下图 [SOFAMesh & SOFA MOSN—基于Istio构建的用于应对大规模流量的Service Mesh解决方案](https://jimmysong.io/posts/sofamesh-and-mosn-proxy-sidecar-service-mesh-by-ant-financial/)的架构图中描述的，MOSN 作为 Sidecar 的方式和应用运行在同一个 Pod 中，拦截所有进出应用容器的流量，[SOFAMesh](https://github.com/sofastack/sofa-mesh) 兼容 Istio，其中使用 Go 语言开发的 [SOFAMosn](https://github.com/sofastack/sofa-mosn) 替换了 Envoy。
 
 ![SOFAMesh架构图](../images/006tNbRwgy1fuyr4vizzwj31kw1biq98.jpg)
 
@@ -269,7 +269,7 @@ ADD istio-iptables.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/istio-iptables.sh"]
 ```
 
-我们看到 `istio-init` 容器的入口是 `/usr/local/bin/istio-iptables.sh` 脚本，再按图索骥看看这个脚本里到底写的什么，该脚本的位置在 Istio 源码仓库的 [tools/deb/istio-iptables.sh](https://github.com/istio/istio/blob/master/tools/deb/istio-iptables.sh)，一共 300 多行，就不贴在这里了。下面我们就来解析下这个启动脚本。
+我们看到 `istio-init` 容器的入口是 `/usr/local/bin/istio-iptables.sh` 脚本，再按图索骥看看这个脚本里到底写的什么，该脚本的位置在 Istio 源码仓库的 `tools/deb/istio-iptables.sh`，一共 300 多行，就不贴在这里了。下面我们就来解析下这个启动脚本。
 
 ### Init 容器启动入口
 
@@ -400,10 +400,6 @@ Chain OUTPUT (policy ACCEPT 18M packets, 1916M bytes)
 
 ![iptables结构图](../images/0069RVTdgy1fv5dm4a9ygj30w50czdi3.jpg)
 
-图片来自[常见 iptables 使用规则场景整理](https://www.aliang.org/Linux/iptables.html)
-
-
-
 每条链中都可以添加多条规则，规则是按照顺序从前到后执行的。我们来看下规则的表头定义。
 
 - **pkts**：处理过的匹配的报文数量
@@ -486,7 +482,7 @@ Chain ISTIO_REDIRECT (2 references)
 - 所有来自 istio-proxy 用户空间的流量跳转到它的调用点 `OUTPUT` 继续执行 `OUTPUT` 链的下一条规则，因为 `OUTPUT` 链中没有下一条规则了，所以会继续执行 `POSTROUTING` 链然后跳出 iptables，直接访问目的地
 - 如果目的地是 localhost 但是流量又不是来自 istio-proxy 用户空间的就跳转到 `ISTIO_REDIRECT` 链
 
-以上 iptables 规则都是 Init 容器启动的时使用 [istio-iptables.sh](https://github.com/istio/istio/blob/master/tools/deb/istio-iptables.sh) 脚本生成的，详细过程可以查看该脚本。
+以上 iptables 规则都是 Init 容器启动的时使用 istio-iptables.sh 脚本生成的，详细过程可以查看该脚本。
 
 ## 查看 Envoy 运行状态
 
@@ -720,4 +716,3 @@ envoy    11 istio-proxy   63u  IPv4 338525      0t0  TCP productpage-v1-745ffc55
 - [iptables 命令使用说明 - wangchujiang.com](https://wangchujiang.com/linux-command/c/iptables.html)
 - [How To List and Delete Iptables Firewall Rules - digitalocean.com](https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules)
 - [一句一句解说 iptables的详细中文手册 - cnblog.com](https://www.cnblogs.com/fhefh/archive/2011/04/04/2005249.html)
-- [常见iptables使用规则场景整理 - aliang.org](https://www.aliang.org/Linux/iptables.html)

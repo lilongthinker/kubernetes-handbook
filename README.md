@@ -4,6 +4,8 @@
 
 ## 关于本书
 
+[![CircleCI](https://circleci.com/gh/rootsongjc/kubernetes-handbook/tree/master.svg?style=svg)](https://circleci.com/gh/rootsongjc/kubernetes-handbook/tree/master)
+
 <p align="center">
   <a href="https://jimmysong.io/kubernetes-handbook">
     <img src="cover.jpg" width="50%" height="50%" alt="Kubernetes Handbook——Kubernetes中文指南/云原生应用架构实践手册 by Jimmy Song(宋净超）">
@@ -43,7 +45,7 @@
 - 按照[说明](https://github.com/rootsongjc/kubernetes-handbook/blob/master/CODE_OF_CONDUCT.md)自行编译成离线版本
 - Fork 一份添加你自己的笔记自行维护，有余力者可以一起参与进来
 
-**注意：本书中的 Service Mesh 相关内容已不再维护，请转至 [istio-handbook](http://www.servicemesher.com/istio-handbook) 浏览。**
+**注意：本书中的 Service Mesh 相关内容已不再维护，请转至 [istio-handbook](https://www.servicemesher.com/istio-handbook) 浏览。**
 
 ## 快速开始
 
@@ -56,6 +58,14 @@
 - [查看贡献者列表](https://github.com/rootsongjc/kubernetes-handbook/graphs/contributors)
 - [查看如何贡献](https://github.com/rootsongjc/kubernetes-handbook/blob/master/CONTRIBUTING.md)
 - [查看文档的组织结构与使用方法](https://github.com/rootsongjc/kubernetes-handbook/blob/master/CODE_OF_CONDUCT.md)
+
+## License
+
+<p align="left">
+  <img src="images/cc4-license.png" alt="CC4 License"/>
+</p>
+
+[署名-非商业性使用-相同方式共享 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
 
 ## Stargazers over time
 

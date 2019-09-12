@@ -483,7 +483,7 @@ nginx-deployment-618515232    11        11        11        7m
 
 ## 暂停和恢复Deployment
 
-您可以在发出一次或多次更新前暂停一个 Deployment，然后再恢复它。这样您就能多次暂停和恢复 Deployment，在此期间进行一些修复工作，而不会发出不必要的 rollout。
+您可以在发出一次或多次更新前暂停一个 Deployment，然后再恢复它。这样您就能在Deployment暂停期间进行多次修复工作，而不会发出不必要的 rollout。
 
 例如使用刚刚创建 Deployment：
 
@@ -722,7 +722,7 @@ $ echo $?
 
 ## 编写 Deployment Spec
 
-在所有的 Kubernetes 配置中，Deployment 也需要`apiVersion`，`kind`和`metadata`这些配置项。配置文件的通用使用说明查看 [部署应用](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)，配置容器，和 [使用 kubectl 管理资源 ](https://kubernetes.io/docs/tutorials/object-management-kubectl/object-management/) 文档。
+在所有的 Kubernetes 配置中，Deployment 也需要`apiVersion`，`kind`和`metadata`这些配置项。配置文件的通用使用说明查看 [部署应用](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)，配置容器，和使用 kubectl 管理资源文档。
 
 ### Pod Template
 
