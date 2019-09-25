@@ -39,9 +39,9 @@ Ingress是授权入站连接到达集群服务的规则集合。
 
 在使用Ingress resource之前，有必要先了解下面几件事情。Ingress是beta版本的resource，在kubernetes1.1之前还没有。你需要一个`Ingress Controller`来实现`Ingress`，单纯的创建一个`Ingress`没有任何意义。
 
-GCE/GKE会在master节点上部署一个ingress controller。你可以在一个pod中部署任意个自定义的ingress controller。你必须正确地annotate每个ingress，比如 [运行多个ingress controller](https://git.k8s.io/ingress#running-multiple-ingress-controllers) 和 [关闭glbc](https://git.k8s.io/ingress-gce/BETA_LIMITATIONS.md#disabling-glbc).
+GCE/GKE会在master节点上部署一个ingress controller。你可以在一个pod中部署任意个自定义的ingress controller。你必须正确地annotate每个ingress，比如 [运行多个ingress controller](https://git.k8s.io/ingress#running-multiple-ingress-controllers) 和 关闭glbc。
 
-确定你已经阅读了Ingress controller的[beta版本限制](https://github.com/kubernetes/ingress-gce/blob/master/BETA_LIMITATIONS.md#glbc-beta-limitations)。在非GCE/GKE的环境中，你需要在pod中[部署一个controller](https://git.k8s.io/ingress-nginx/README.md)。
+确定你已经阅读了Ingress controller的 beta版本限制。在非GCE/GKE的环境中，你需要在pod中[部署一个controller](https://git.k8s.io/ingress-nginx/README.md)。
 
 ## Ingress Resource
 
@@ -83,7 +83,7 @@ GCE/GKE会在master节点上部署一个ingress controller。你可以在一个p
 - F5（公司）[支持并维护](https://support.f5.com/csp/article/K86859508) [F5 BIG-IP Controller for Kubernetes](http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest).
 - [Kong](https://konghq.com/) 同时支持并维护[社区版](https://discuss.konghq.com/c/kubernetes)与[企业版](https://konghq.com/api-customer-success/)的 [Kong Ingress Controller for Kubernetes](https://konghq.com/blog/kubernetes-ingress-controller-for-kong/).
 - [Traefik](https://github.com/containous/traefik) 是功能齐全的 ingress controller([Let’s Encrypt](https://letsencrypt.org/), secrets, http2, websocket…), [Containous](https://containo.us/services) 也对其提供商业支持。
-- [Istio](https://istio.io/zh) 使用CRD Gateway来[控制Ingress流量](https://istio.io/zh/docs/tasks/traffic-management/ingress/)。
+- [Istio](https://istio.io) 使用CRD Gateway来[控制Ingress流量](https://istio.io/docs/tasks/traffic-management/ingress/)。
 
 
 ## 在你开始前
@@ -314,5 +314,3 @@ test      -                       178.91.123.132
 - [使用 NGINX 和 NGINX Plus 的 Ingress Controller 进行 Kubernetes 的负载均衡](http://www.cnblogs.com/276815076/p/6407101.html)
 - [Kubernetes : Ingress Controller with Træfɪk and Let's Encrypt](https://blog.osones.com/en/kubernetes-ingress-controller-with-traefik-and-lets-encrypt.html)
 - [Kubernetes : Træfɪk and Let's Encrypt at scale](https://blog.osones.com/en/kubernetes-traefik-and-lets-encrypt-at-scale.html)
-- [Kubernetes Ingress Controller-Træfɪk](https://docs.traefik.io/user-guide/kubernetes/)
-- [使用Istio控制Ingress流量](https://istio.io/zh/docs/tasks/traffic-management/ingress/)
